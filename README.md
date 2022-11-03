@@ -1,2 +1,3 @@
-# backjoon.py
-backjoon online judge with python
+# algorithm.py
+algorithm study with python
+backjoon & programmers
