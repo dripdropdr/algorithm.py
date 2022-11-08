@@ -9,3 +9,7 @@ def solution(numbers):
     answer = str(int("".join(str_numbers)))
         
     return answer
+
+# 앞 자리에 큰 숫자를 이어 붙여야 그 결과가 가장 큰 숫자가 됨
+# 3을 곱해서 sort하는 이유는 30, 3과 같은 케이스 때문 303 < 330
+# str(int(string))를 통해서 000등의 경우 처리
