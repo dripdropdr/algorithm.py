@@ -9,16 +9,17 @@
 # 폰켓몬의 종류 번호는 1 이상 200,000 이하의 자연수로 나타냅니다.
 # 가장 많은 종류의 폰켓몬을 선택하는 방법이 여러 가지인 경우에도, 선택할 수 있는 폰켓몬 종류 개수의 최댓값 하나만 return 하면 됩니다.
 
+from collections import defaultdict
 def solution(nums):
-    num = len(nums)//2
-    _dict = {}
-    for p in nums:
-        if p in _dict.keys():
-            _dict[p] += 1
-        else:
-            _dict[p] = 1
+    answer = 0
+    dict = defaultdict(int)
+    for n in nums:
+        dict[n] += 1
+    
+    if len(dict.keys()) >= len(nums)//2: return len(nums)//2
+    else: return len(dict.keys())
 
-    if len(_dict.keys()) >= num:
-        return num
-    else:
-        return len(_dict.keys())
+
+def solution(nums):
+    return min(len(nums)/2, len(set(nums))) # set을 기억하자
+    
