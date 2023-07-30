@@ -12,18 +12,19 @@
 # 참가자의 이름은 1개 이상 20개 이하의 알파벳 소문자로 이루어져 있습니다.
 # 참가자 중에는 동명이인이 있을 수 있습니다.
 
+from collections import defaultdict
 def solution(participant, completion):
-    _dict = {}
-    #참가자 이름이 담긴 딕셔너리, 동명이인 처리
-    for p in participant:
-        if p in _dict.keys():
-            _dict[p] += 1
-        else:
-            _dict[p] = 1
-    # 참가자 이름이 담긴 딕셔너리에서 완주자 하나씩 빼줌    
-    for c in completion:
-        _dict[c] -= 1
-        if _dict[c] == 0:
-            del _dict[c]
-            
-    return list(_dict.keys())[0]
+    dict = defaultdict(int)
+    
+    for par in participant:
+        dict[par] += 1
+    for com in completion:
+        dict[com] -= 1
+    
+    return sorted(dict.items(), key=lambda x: x[1], reverse=True)[0][0]
+
+
+from collections import Counter
+def solution(participant, completion):
+    answer = Counter(participant) - Counter(completion) # Counter끼리는 뺄셈이 된다!
+    return list(answer.keys())[0]
