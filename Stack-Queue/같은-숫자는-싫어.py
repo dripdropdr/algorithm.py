@@ -1,3 +1,5 @@
+Programmers: https://school.programmers.co.kr/learn/courses/30/lessons/12906
+
 #       arr	        answer
 # [1,1,3,3,0,1,1]	[1,3,0,1]
 #   [4,4,4,3,3]	    [4,3]
@@ -8,15 +10,24 @@
 # 배열 arr의 크기 : 1,000,000 이하의 자연수
 # 배열 arr의 원소의 크기 : 0보다 크거나 같고 9보다 작거나 같은 정수
 
-
+# append와 pop을 쓰려고 노력한 코드
 def solution(arr):
     answer = []
-    for i in arr:
-        if len(answer) == 0:
-            answer.append(i)
+    for a in arr:
+        if len(answer) == 0: answer.append(a)
         else:
-            if i == answer[-1]:
-                pass
+            tmp = answer.pop()
+            if tmp == a: answer.append(tmp)
             else:
-                answer.append(i)
+                answer.append(tmp)
+                answer.append(a)
+
+    return answer
+
+# 짧은 코드; [-1:]이 포인트; 빈 리스트여도 안 죽음
+def solutions(arr):
+    answer = []
+    for i in arr:
+        if answer[-1:] == [i]: continue
+        answer.append(i)
     return answer
