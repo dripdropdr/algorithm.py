@@ -1,3 +1,5 @@
+Programmers: https://school.programmers.co.kr/learn/courses/30/lessons/42587
+
 #   priorities	    location	return
 # [2, 1, 3, 2]	        2	      1
 # [1, 1, 9, 1, 1, 1]	  0	      5
@@ -13,23 +15,42 @@
 # 현재 대기목록에 있는 문서의 중요도가 순서대로 담긴 배열 priorities와 내가 인쇄를 요청한 문서가 현재 대기목록의 어떤 위치에 있는지를 알려주는 location이 매개변수로 주어질 때, 
 # 내가 인쇄를 요청한 문서가 몇 번째로 인쇄되는지 return 하도록 solution 함수를 작성해주세요.
 
-from collections import deque
-def solution(priorities, location):
-    pri_queue = deque(priorities)
-    print_stack = [] #프린트 몇 개 되었는지... 굳이 스택으로 안 하고 answer = 0부터 해서 더해줘도 될 듯
 
+def solution(priorities, location):
+    q = list(enumerate(priorities))
+    answer = 0
     while True:
-        if pri_queue[0] == max(pri_queue):
-            print_stack.append(pri_queue.popleft())
-            if location == 0:
-                return len(print_stack)
-            else:
-                location -= 1
+        tmp = q.pop(0)
+        if list(filter(lambda x: tmp[1] < x[1], q)): q.append(tmp)
         else:
-            pri_queue.append(pri_queue.popleft())
-            if location != 0:
-                location -= 1
-            else:
-                location = len(pri_queue) - 1
-                
-# Sorted 된 내림차순 priorities 리스트 & enumerate로 job의 인덱스와 priorieties => 이 둘을 비교해가면서 출력될 때마다 answer+=1 하는 방법도 있음!
+            answer += 1
+            if tmp[0] == location: return answer
+
+
+# any(iterable): iterable안의 어떤 값이라도 True면 True return
+# all(iterable): 모든 값이 True면 True return
+def solution(priorities, location):
+    queue =  [(i,p) for i,p in enumerate(priorities)]
+    answer = 0
+    while True:
+        cur = queue.pop(0)
+        if any(cur[1] < q[1] for q in queue):
+            queue.append(cur)
+        else:
+            answer += 1
+            if cur[0] == location:
+                return answer
+
+# cursor를 하나씩 더하고, cursor%job으로 idx err 방지하며 priorities 순회
+def solution(priorities, location):
+    jobs = len(priorities)
+    answer = 0
+    cursor = 0
+    while True:
+        if max(priorities) == priorities[cursor%jobs]:
+            priorities[cursor%jobs] = 0
+            answer += 1
+            if cursor%jobs == location:
+                break
+        cursor += 1   
+    return answer
