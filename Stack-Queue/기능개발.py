@@ -14,31 +14,25 @@
 # 배포는 하루에 한 번만 할 수 있으며, 하루의 끝에 이루어진다고 가정합니다. 예를 들어 진도율이 95%인 작업의 개발 속도가 하루에 4%라면 배포는 2일 뒤에 이루어집니다.
 
 
-def progress_a_day(progress, speed):
-    return progress + speed
-
+# 배포 날짜는 고려 안 하고, 기능 간의 완성 관계만 고려함 
+import numpy as np
 def solution(progresses, speeds):
     answer = []
-    #매일매일... 너무 비효율적인듯
-    for day in range(10000):
-        progresses = list(map(progress_a_day,progresses, speeds))
+    tmp = []
+    for p, s in zip(progresses, speeds): 
+        if len(tmp) != 0 and max(tmp) < np.ceil((100-p)/s):
+            answer.append(len(tmp))
+            tmp = []
+            tmp.append(np.ceil((100-p)/s))
 
-        for i in range(len(progresses)):
-            if i == 0:
-                if progresses[0] >= 100:
-                    answer.append(1)
-                    del progresses[0], speeds[0] # que
-                else: break
-            else:
-                if progresses[0] >= 100:
-                    answer[-1] +=1
-                    del progresses[0], speeds[0]
-                else: break
-        if not progresses: break
-        
+        else: # len(tmp) == 0
+            tmp.append(np.ceil((100-p)/s))
+    
+    answer.append(len(tmp))
     return answer
 
-  
+
+# math.ceil을 쓰지 않고 올림하기: -((prg-100)//spd) e.g. -(-5//2) = -(-3) = 3. 
 def solution(progresses, speeds):
     answer = []
     for prg, spd in zip(progresses, speeds):
@@ -47,5 +41,5 @@ def solution(progresses, speeds):
         else:
             answer[-1][1] += 1
 
-    return [t[1] for t in answer] # 효율적인 풀이... [[2, 2], [3, 1], [5, 1]] 이런 식으로 배포 일자와 배포되는 기능 개수가 있는 
+    return [t[1] for t in answer] # 효율적인 풀이... [[2, 2], [3, 1], [5, 1]] 이런 식으로 배포 일자와 배포되는 기능 개수가 있는 구조
 
