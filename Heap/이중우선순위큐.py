@@ -1,5 +1,7 @@
 Programmers: https://school.programmers.co.kr/learn/courses/30/lessons/42628
 
+# deque에 익숙해질 필요가 있는듯. clear(), reverse(), remove(v), insert(i,v), len() 등등을 지원함
+# 프로그래머스에서 return deque로 하면 JSON serialiazaton Error 뜸 ㅎ
 from collections import deque
 def solution(operations):
     answer = deque([])
