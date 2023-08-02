@@ -1,3 +1,5 @@
+Programmers: https://school.programmers.co.kr/learn/courses/30/lessons/42747#
+
 #   citations	    return
 # [3, 0, 6, 1, 5]	  3
 
@@ -9,16 +11,24 @@
 # 어떤 과학자가 발표한 논문의 인용 횟수를 담은 배열 citations가 매개변수로 주어질 때, 
 # 이 과학자의 H-Index를 return 하도록 solution 함수를 작성해주세요.
 
+# increase
+def solution(citations):
+    citations.sort()
+    for i in range(1000):
+        h_num = len(list(filter(lambda x: x>=i, citations)))
+        if i == h_num:
+            return i
+        elif i > h_num:
+            return i-1
+
+
 def solution(citations):
     answer = 0 #  for [0,0,0,0,0] 0
-    n = len(citations)
-    h = len(citations) # max
+    max_h = len(citations) # max h-idx
     citations.sort(reverse=True)
-    for i in range(h,0,-1):
-        h1 = len(list(filter(lambda x: x>=i, citations)))
-        h2 = i
-        if h1 >= h2:
-            answer = h2
+    for h in range(max_h,0,-1):
+        h1 = len(list(filter(lambda x: x>=h, citations)))
+        if h1 >= h:
+            answer = h
             break
-            
     return answer
