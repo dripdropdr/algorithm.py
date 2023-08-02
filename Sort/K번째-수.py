@@ -1,3 +1,5 @@
+Programmers: https://school.programmers.co.kr/learn/courses/30/lessons/42748
+
 #         array	                       commands	                return
 # [1, 5, 2, 6, 3, 7, 4]	[[2, 5, 3], [4, 4, 1], [1, 7, 3]]	[5, 6, 3]
 
@@ -10,22 +12,13 @@
 # 배열 array, [i, j, k]를 원소로 가진 2차원 배열 commands가 매개변수로 주어질 때, 
 # commands의 모든 원소에 대해 앞서 설명한 연산을 적용했을 때 나온 결과를 배열에 담아 return 하도록 solution 함수를 작성해주세요.
 
-
-# Bubble Sort
+# 
 def solution(array, commands):
-    answer=[]
-    for command in commands:
-        goalidx = command[2]-1
-        arr = array[command[0]-1:command[1]]
-        
-        step = len(arr) - 1
-        for j in range(step):
-            for i in range(len(arr)):
-                if i + 1 == len(arr):
-                    break
-                if arr[i] > arr[i + 1]:
-                    tmp = arr[i + 1]
-                    arr[i + 1] = arr[i]
-                    arr[i] = tmp
-        answer.append(arr[goalidx])
+    answer = []
+    for s, e, i in commands:
+        answer.append(sorted(array[s-1:e])[i-1])
     return answer
+
+# 완전 짧은 코드
+def solution(array, commands):
+    return list(map(lambda x:sorted(array[x[0]-1:x[1]])[x[2]-1], commands))
