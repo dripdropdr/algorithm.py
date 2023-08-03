@@ -1,3 +1,5 @@
+Programmers: https://school.programmers.co.kr/learn/courses/30/lessons/42840
+
 # answers	    return
 # [1,2,3,4,5]	  [1]
 # [1,3,2,4,2]	[1,2,3]
@@ -10,19 +12,14 @@
 
 
 def solution(answers):
-    answer = []
-    score = [0,0,0]
-    students = list(map(lambda x: x*(len(answers)), [[1,2,3,4,5], [2,1,2,3,2,4,2,5], [3,3,1,1,2,2,4,4,5,5]]))
+    result = [0,0,0]
+    n1 = [1,2,3,4,5]
+    n2 = [2,1,2,3,2,4,2,5]
+    n3 = [3,3,1,1,2,2,4,4,5,5]
+    for idx, ans in enumerate(answers):
+        if n1[idx%5] == ans: result[0] += 1
+        if n2[idx%8] == ans: result[1] += 1
+        if n3[idx%10] == ans: result[2] += 1
     
-    for idx, student in enumerate(students):
-        for a, s in zip(answers, student):
-            if a == s:
-                score[idx] +=1
-
-    for idx in range(3):
-        if score[idx] == max(score):
-            answer.append(idx+1)
-
-    return answer
-  
-#   student1[answers_dx % len(student1)] 같은 모듈러 방식도 있음
+    m = max(result)
+    return [idx+1 for idx, n in enumerate(result) if n == m]
