@@ -29,3 +29,10 @@ def solution(brown, yellow):
         if yellow % i == 0:
             if 2*(i + yellow//i) == brown-4:
                 return [yellow//i+2, i+2]
+
+# 이 식 2개를 연립하여 만든 2차방정식을 활용하여 근의공식 계산   w + h = (brown + 4) / 2    |   w * h = brown + yellow
+import math
+def solution(brown, yellow):
+    w = ((brown+4)/2 + math.sqrt(((brown+4)/2)**2-4*(brown+yellow)))/2
+    h = ((brown+4)/2 - math.sqrt(((brown+4)/2)**2-4*(brown+yellow)))/2
+    return [w,h]
