@@ -1,3 +1,4 @@
+Programmers : https://school.programmers.co.kr/learn/courses/30/lessons/42842
 # brown	yellow	return
 #   10	  2	    [4, 3]
 #   8	    1	    [3, 3]
@@ -10,19 +11,21 @@
 # 노란색 격자의 수 yellow는 1 이상 2,000,000 이하인 자연수입니다.
 # 카펫의 가로 길이는 세로 길이와 같거나, 세로 길이보다 깁니다.
 
-# https://school.programmers.co.kr/learn/courses/30/lessons/42842
-
 
 def solution(brown, yellow):
     answer = []
-    _brown = (brown - 4)//2
-    w = _brown-1
-    h = 1
-    print(_brown)
-    for i in range(_brown//2+1):
-        if w*h == yellow:
-            answer = [w+2, h+2]
-            break
-        w -= 1
-        h += 1
-    return answer
+    brown_half = brown//2
+    for height in range (3, brown_half):
+        y_width = brown_half - height
+        y_height = height - 2
+        if y_width != 0 and y_height != 0 and y_width >= y_height and y_width*y_height == yellow:
+            return [y_width+2, y_height+2]
+
+
+
+# 가로가 세로보다 길어야 하기 때문에, yellow 세로의 범위를 제곱근+1 으로 제한함
+def solution(brown, yellow):
+    for i in range(1, int(yellow**(1/2))+1):
+        if yellow % i == 0:
+            if 2*(i + yellow//i) == brown-4:
+                return [yellow//i+2, i+2]
