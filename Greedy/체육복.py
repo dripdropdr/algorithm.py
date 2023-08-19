@@ -1,3 +1,5 @@
+Programmers: https://school.programmers.co.kr/learn/courses/30/lessons/42862#
+
 # n	lost	reserve	return
 # 5	[2, 4]	[1, 3, 5]	5
 # 5	[2, 4]	[3]	4
@@ -18,24 +20,15 @@
 # 여벌 체육복을 가져온 학생이 체육복을 도난당했을 수 있습니다. 이때 이 학생은 체육복을 하나만 도난당했다고 가정하며, 남은 체육복이 하나이기에 다른 학생에게는 체육복을 빌려줄 수 없습니다.
 
 def solution(n, lost, reserve):
+    inter = set(lost).intersection(set(reserve))
+    lost = list(set(lost) - inter)
+    reserve = list(set(reserve) - inter)
+    # if not lost: return n
+    # if not reserve: return n-len(lost)
+
     answer = n - len(lost)
-    lost.sort() # 정렬
-    reserve.sort() # 정렬
-    _lost = lost.copy() # loop돌리고 remove하면 중간에 끊기므로 copy해줌
     
-    #빌려온 학생 == 도난당한 학생
-    for i in _lost:
-        if i in reserve:
-            reserve.remove(i)
-            lost.remove(i)
-            answer += 1
-            
-    #빌려온 학생 != 도난당한 학생
-    for i in lost:
-        if i-1 in reserve:
-            reserve.remove(i - 1)
-            answer += 1
-        elif i+1 in reserve:
-            reserve.remove(i + 1)
-            answer += 1
+    for l in lost:
+        if l-1 in reserve and l>1: reserve.remove(l-1); answer+=1; print('ho')
+        elif l+1 in reserve: reserve.remove(l+1); answer+=1;
     return answer
